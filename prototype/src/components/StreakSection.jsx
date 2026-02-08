@@ -1,7 +1,7 @@
 import { Flame, Medal } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function StreakSection() {
+export default function StreakSection({ streak }) {
   return (
     <section className="mb-8">
       <div className="flex gap-4">
@@ -11,10 +11,12 @@ export default function StreakSection() {
             transition={{ repeat: Infinity, duration: 2 }}
             className="mb-2 bg-white p-2 rounded-full shadow-sm"
           >
-            <Flame className="w-6 h-6 text-orange-500 fill-orange-500" />
+            <Flame className={`w-6 h-6 ${streak > 0 ? 'text-orange-500 fill-orange-500' : 'text-gray-300 fill-transparent'}`} />
           </motion.div>
-          <div className="text-2xl font-bold text-gray-900">3-Day</div>
-          <div className="text-xs text-orange-700 font-medium uppercase tracking-wide">Consistency Streak</div>
+          <div className="text-2xl font-bold text-gray-900">{streak}-Day</div>
+          <div className="text-xs text-orange-700 font-medium uppercase tracking-wide">
+            {streak > 0 ? 'Consistency Streak' : 'Start streak'}
+          </div>
         </div>
         
         <div className="flex-1 bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-100 flex flex-col items-center justify-center text-center">

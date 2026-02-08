@@ -1,5 +1,6 @@
 import { Play, BookOpen, CheckCircle, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export default function MissionCard() {
   return (
@@ -35,13 +36,15 @@ export default function MissionCard() {
             </div>
           </div>
           
-          <motion.button
-            whileTap={{ scale: 0.98 }}
-            className="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-200 transition-colors"
-          >
-            Start Now
-            <ArrowRight className="w-4 h-4" />
-          </motion.button>
+          <Link to="/study-materials">
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-200 transition-colors"
+            >
+              Start Now
+              <ArrowRight className="w-4 h-4" />
+            </motion.button>
+          </Link>
         </div>
       </div>
     </section>

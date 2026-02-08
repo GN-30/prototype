@@ -1,48 +1,46 @@
-import { motion } from 'framer-motion';
-import Header from './components/Header';
-import MissionCard from './components/MissionCard';
-import ProgressSection from './components/ProgressSection';
-import StreakSection from './components/StreakSection';
-import RecoverySection from './components/RecoverySection';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import Home from './pages/Home';
+import StudyMaterials from './pages/StudyMaterials';
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+function AppContent() {
+  const [streak, setStreak] = useState(0);
+  const [progress, setProgress] = useState({
+    Listening: 0,
+    Reading: 0,
+    Writing: 0,
+    Speaking: 0
+  });
+  const navigate = useNavigate();
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+  const completeMission = () => {
+    setStreak(s => s + 1);
+    setProgress(prev => ({
+      Listening: Math.min(prev.Listening + 10, 100),
+      Reading: Math.min(prev.Reading + 10, 100),
+      Writing: Math.min(prev.Writing + 5, 100),
+      Speaking: Math.min(prev.Speaking + 5, 100)
+    }));
+    navigate('/');
+  };
+
+  const resetStreak = () => {
+    setStreak(0);
+  };
+
+  return (
+    <Routes>
+      <Route path="/" element={<Home streak={streak} progress={progress} onReset={resetStreak} />} />
+      <Route path="/study-materials" element={<StudyMaterials onComplete={completeMission} />} />
+    </Routes>
+  );
+}
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center font-sans">
-      <div className="w-full max-w-md bg-white min-h-screen shadow-xl overflow-hidden">
-        <div className="px-6 py-8">
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-          >
-            <motion.div variants={item}>
-              <Header />
-            </motion.div>
-            <motion.main variants={item}>
-              <MissionCard />
-              <ProgressSection />
-              <StreakSection />
-              <RecoverySection />
-            </motion.main>
-          </motion.div>
-        </div>
-      </div>
-    </div>
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 
